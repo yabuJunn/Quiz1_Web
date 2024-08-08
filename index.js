@@ -26,6 +26,7 @@ let disorganizedString = ""
 
 
 function getDisorganizedWord() {
+    disorganizedString = ""
     switch (idWord) {
         case 1:
             disorganizedWord = randomWord1.sort()
@@ -45,6 +46,10 @@ function getDisorganizedWord() {
         disorganizedString = disorganizedString + letter
     }
 
+    console.log("Put new word")
+    showWordH1.textContent = ""
+    console.log(showWordH1.textContent)
+    console.log(disorganizedString)
     showWordH1.textContent = disorganizedString
 }
 
@@ -62,7 +67,6 @@ window.addEventListener('load', () => {
 
 window.addEventListener('keydown', (event) => {
     const key = event.code
-    console.log(focusId)
     if (key.includes('Key')) {
         if (focusId != 7) {
             updateInputFocus()
@@ -93,11 +97,6 @@ function updateInputFocus() {
         case 5:
             letterInput6.focus()
             break;
-        case 6:
-            resetLetterInputs()
-            letterInput1.focus()
-            break;
-
         default:
             break;
     }
@@ -113,12 +112,12 @@ function resetLetterInputs() {
 
     focusId = 0
     letterInput1.focus()
+    idWord = randomIntFromInterval(1, 3)
+    getDisorganizedWord()
 }
 
 function winComprobation() {
     const reStructuredWord = structureRandomWord()
-    console.log(reStructuredWord)
-    console.log(idWord)
     switch (idWord) {
         case 1:
             if (reStructuredWord === word1) {
@@ -144,10 +143,12 @@ function winComprobation() {
         default:
             break;
     }
+
+    resetLetterInputs()
+    letterInput1.focus()
 }
 
 function structureRandomWord() {
-    console.log("Structure random word:")
     let structureWord = ""
     structureWord = structureWord + letterInput1.value
     structureWord = structureWord + letterInput2.value
@@ -159,6 +160,5 @@ function structureRandomWord() {
 }
 
 letterInput6.addEventListener("input", () => {
-    console.log("WinComprobation")
     winComprobation()
 })
