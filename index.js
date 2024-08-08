@@ -2,6 +2,11 @@ const randomWord1 = ["a", "b", "u", "e", "l", "a"]
 const randomWord2 = ["b", "r", "u", "t", "a", "l"]
 const randomWord3 = ["h", "a", "b", "l", "a", "r"]
 
+const word1 = "abuela"
+const word2 = "brutal"
+const word3 = "hablar"
+
+
 const letterInput1 = document.getElementById("letterInput1")
 const letterInput2 = document.getElementById("letterInput2")
 const letterInput3 = document.getElementById("letterInput3")
@@ -11,7 +16,7 @@ const letterInput6 = document.getElementById("letterInput6")
 
 const showWordH1 = document.getElementById("showWord")
 
-let focusId = 0
+let focusId = -1
 
 let idWord = randomIntFromInterval(1, 3)
 
@@ -49,7 +54,6 @@ function randomIntFromInterval(min, max) {
 }
 
 getDisorganizedWord()
-console.log(disorganizedWord)
 
 window.addEventListener('load', () => {
     letterInput1.focus()
@@ -58,10 +62,9 @@ window.addEventListener('load', () => {
 
 window.addEventListener('keydown', (event) => {
     const key = event.code
-    console.log(key)
+    console.log(focusId)
     if (key.includes('Key')) {
         if (focusId != 7) {
-            console.log(focusId)
             updateInputFocus()
             focusId = focusId + 1
         } else {
@@ -71,30 +74,30 @@ window.addEventListener('keydown', (event) => {
 })
 
 function updateInputFocus() {
-    console.log("Update focus")
     switch (focusId) {
-        case 1:
+        case 0:
             letterInput1.focus()
             break;
-        case 2:
+        case 1:
             letterInput2.focus()
             break;
-        case 3:
+        case 2:
             letterInput3.focus()
             break;
-        case 4:
+        case 3:
             letterInput4.focus()
             break;
-        case 5:
+        case 4:
             letterInput5.focus()
             break;
-        case 6:
+        case 5:
             letterInput6.focus()
             break;
-        case 7:
+        case 6:
             resetLetterInputs()
             letterInput1.focus()
             break;
+
         default:
             break;
     }
@@ -108,6 +111,54 @@ function resetLetterInputs() {
     letterInput5.value = ""
     letterInput6.value = ""
 
-    focusId = 2
+    focusId = 0
     letterInput1.focus()
 }
+
+function winComprobation() {
+    const reStructuredWord = structureRandomWord()
+    console.log(reStructuredWord)
+    console.log(idWord)
+    switch (idWord) {
+        case 1:
+            if (reStructuredWord === word1) {
+                alert("Bien hecho")
+            } else {
+                alert("Error")
+            }
+            break;
+        case 2:
+            if (reStructuredWord === word2) {
+                alert("Bien hecho")
+            } else {
+                alert("Error")
+            }
+            break;
+        case 3:
+            if (reStructuredWord === word3) {
+                alert("Bien hecho")
+            } else {
+                alert("Error")
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+function structureRandomWord() {
+    console.log("Structure random word:")
+    let structureWord = ""
+    structureWord = structureWord + letterInput1.value
+    structureWord = structureWord + letterInput2.value
+    structureWord = structureWord + letterInput3.value
+    structureWord = structureWord + letterInput4.value
+    structureWord = structureWord + letterInput5.value
+    structureWord = structureWord + letterInput6.value
+    return structureWord
+}
+
+letterInput6.addEventListener("input", () => {
+    console.log("WinComprobation")
+    winComprobation()
+})
